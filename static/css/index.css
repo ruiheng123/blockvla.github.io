@@ -367,6 +367,7 @@ body {
 
 .demo-task,
 .demo-speed,
+.demo-method-badge,
 .demo-finished {
   border-radius: 4px;
   font-family: 'Google Sans', sans-serif;
@@ -394,6 +395,21 @@ body {
   padding: 0.28rem 0.45rem;
   right: 0.65rem;
   top: 0.65rem;
+}
+
+.demo-method-badge {
+  background: rgba(201, 75, 75, 0.94);
+  bottom: 0.65rem;
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 800;
+  left: 0.65rem;
+  line-height: 1.2;
+  padding: 0.32rem 0.5rem;
+}
+
+.block-card .demo-method-badge {
+  background: rgba(47, 143, 107, 0.94);
 }
 
 .demo-finished {

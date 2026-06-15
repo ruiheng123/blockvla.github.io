@@ -265,7 +265,7 @@
 
     <div class="demo-compare">
       <div class="demo-column-heading baseline-heading">
-        <span class="demo-method">Baseline DDVLA</span>
+        <span class="demo-method">DiscreteDiffusionVLA (Baseline)</span>
         <ul class="demo-metric-list">
           <li><span class="status-icon status-no">✕</span><span>High latency</span></li>
           <li><span class="status-icon status-no">✕</span><span>Frequent stuttering</span></li>
@@ -273,7 +273,7 @@
         </ul>
       </div>
       <div class="demo-column-heading block-heading">
-        <span class="demo-method">BlockVLA</span>
+        <span class="demo-method">BlockVLA (Ours)</span>
         <ul class="demo-metric-list">
           <li><span class="status-icon status-ok">✓</span><span>Faster inference</span></li>
           <li><span class="status-icon status-ok">✓</span><span>Greatly reduced stuttering</span></li>
@@ -284,6 +284,7 @@
       <article class="demo-video-card" data-demo-pair="cube">
         <div class="demo-task">Put the cube into the bowl (150-200 frames)</div>
         <div class="demo-speed">3× speed</div>
+        <div class="demo-method-badge">DiscreteDiffusionVLA (Baseline)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video baseline-video" autoplay muted playsinline preload="auto">
           <source src="./static/video/cube_Baseline.mp4" type="video/mp4">
@@ -293,6 +294,7 @@
       <article class="demo-video-card block-card" data-demo-pair="cube">
         <div class="demo-task">Put the cube into the bowl (150-200 frames)</div>
         <div class="demo-speed">3× speed</div>
+        <div class="demo-method-badge">BlockVLA (Ours)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video block-video" autoplay muted playsinline preload="auto">
           <source src="./static/video/cube_BD.mp4" type="video/mp4">
@@ -302,6 +304,7 @@
       <article class="demo-video-card" data-demo-pair="corn">
         <div class="demo-task">Put the corn into the plate (250-300 frames)</div>
         <div class="demo-speed">3× speed</div>
+        <div class="demo-method-badge">DiscreteDiffusionVLA (Baseline)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video baseline-video" autoplay muted playsinline preload="auto">
           <source src="./static/video/corn_Baseline.mp4" type="video/mp4">
@@ -311,6 +314,7 @@
       <article class="demo-video-card block-card" data-demo-pair="corn">
         <div class="demo-task">Put the corn into the plate (250-300 frames)</div>
         <div class="demo-speed">3× speed</div>
+        <div class="demo-method-badge">BlockVLA (Ours)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video block-video" autoplay muted playsinline preload="auto">
           <source src="./static/video/corn_BD.mp4" type="video/mp4">
@@ -320,6 +324,7 @@
       <article class="demo-video-card" data-demo-pair="both">
         <div class="demo-task">Put both carrot and eggplant into the plate (450 - 550 frames)</div>
         <div class="demo-speed">3× speed</div>
+        <div class="demo-method-badge">DiscreteDiffusionVLA (Baseline)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video baseline-video" autoplay muted playsinline preload="auto">
           <source src="./static/video/both_Baseline.mp4" type="video/mp4">
@@ -329,6 +334,7 @@
       <article class="demo-video-card block-card" data-demo-pair="both">
         <div class="demo-task">Put both carrot and eggplant into the plate (450 - 550 frames)</div>
         <div class="demo-speed">3× speed</div>
+        <div class="demo-method-badge">BlockVLA (Ours)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video block-video" autoplay muted playsinline preload="auto">
           <source src="./static/video/both_BD.mp4" type="video/mp4">
