@@ -219,20 +219,27 @@
       </div>
     </div>
 
+    <figure class="overview-figure">
+      <img src="./static/img/overall2.png" alt="Overall architecture of the proposed BlockVLA framework.">
+      <figcaption>
+        <strong>BlockVLA</strong> adapts a pretrained <strong>autoregressive VLA</strong> into an efficient diffusion-based policy. Instead of moving to fully bidirectional denoising, BlockVLA uses <strong>blockwise causal masking</strong> to preserve global causal dependencies while enabling parallel denoising within each block. During inference, this block-level autoregressive flow supports <strong>VL prefix caching</strong> and <strong>KV-Cache reuse</strong>, reducing the latency of discrete diffusion policies for real-world robotic control. <strong>The key distinction from standard Discrete Diffusion is summarized below.</strong>
+      </figcaption>
+    </figure>
+
     <div class="overview-compare">
       <article class="overview-card baseline-overview">
         <h3 class="overview-title">Discrete Diffusion <span>(Baseline)</span></h3>
         <ul class="overview-list">
-          <li><span class="status-icon status-ok">✓</span><span>Parallel Decoding</span></li>
-          <li><span class="status-icon status-no">✕</span><span>KV-Cache Reuse</span></li>
-          <li><span class="status-icon status-no">✕</span><span>Efficient Seq Scaling</span></li>
+          <li><span class="status-icon status-ok">&#10003;</span><span>Parallel Decoding</span></li>
+          <li><span class="status-icon status-no">&#10005;</span><span>KV-Cache Reuse</span></li>
+          <li><span class="status-icon status-no">&#10005;</span><span>Efficient Seq Scaling</span></li>
         </ul>
       </article>
 
       <div class="overview-arrow" aria-label="Introduced components">
         <div class="overview-arrow-text">
           <span class="overview-intro">Introducing</span>
-          <span>1. Prefix Caching</span>
+          <span>1. VL Prefix Caching</span>
           <span>2. Blockwise Causal Masking</span>
         </div>
         <div class="overview-arrow-line"></div>
@@ -241,12 +248,30 @@
       <article class="overview-card block-overview">
         <h3 class="overview-title">Block Diffusion <span>(Ours)</span></h3>
         <ul class="overview-list">
-          <li><span class="status-icon status-ok">✓</span><span>Parallel Decoding</span></li>
-          <li><span class="status-icon status-ok">✓</span><span>KV-Cache Reuse</span></li>
-          <li><span class="status-icon status-ok">✓</span><span>Efficient Seq Scaling</span></li>
+          <li><span class="status-icon status-ok">&#10003;</span><span>Parallel Decoding</span></li>
+          <li><span class="status-icon status-ok">&#10003;</span><span>KV-Cache Reuse</span></li>
+          <li><span class="status-icon status-ok">&#10003;</span><span>Efficient Seq Scaling</span></li>
         </ul>
       </article>
     </div>
+  </div>
+</section>
+
+
+<section class="section simulation-section" id="simulation">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Simulation Experiments on LIBERO</h2>
+        <p class="simulation-caption">
+          Our <strong>BlockVLA</strong> accelerates both <strong>training convergence</strong> and <strong>inference</strong>: it reaches above 85% overall success rate <strong>2.5&times;</strong> earlier during training and achieves <strong>3.3&times;</strong> faster inference.
+        </p>
+      </div>
+    </div>
+
+    <figure class="simulation-figure">
+      <img src="./static/img/merge.png" alt="Simulation experiments on LIBERO comparing BlockVLA with baselines.">
+    </figure>
   </div>
 </section>
 
@@ -256,10 +281,15 @@
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Real-world Experiment Demo</h2>
-        <p class="demo-subtitle">
-          The paired videos are synchronized at 3× playback speed. When one policy finishes early,
-          it stays on the final frame until the paired run also completes.
-        </p>
+        <div class="demo-intro">
+          <p>We evaluate on real-world robot arm for three horizons:</p>
+          <ul>
+            <li><strong>Short-horizon</strong> (150-200 frames), Put the cube into the bowl.</li>
+            <li><strong>Mid-horizon</strong> (250-300 frames), Put the corn into the plate (with different gripper orientations).</li>
+            <li><strong>Long-horizon</strong> (450-550 frames), Put both carrot and eggplant into the plate.</li>
+          </ul>
+          <p>Each task contains <strong>100 collected trajectories</strong> and is evaluated over <strong>24 trials</strong>. The paired videos are synchronized at <strong>3&times; playback speed</strong>. When one policy finishes early, it stays on the final frame until the paired run also completes.</p>
+        </div>
       </div>
     </div>
 
@@ -267,23 +297,23 @@
       <div class="demo-column-heading baseline-heading">
         <span class="demo-method">DiscreteDiffusionVLA (Baseline)</span>
         <ul class="demo-metric-list">
-          <li><span class="status-icon status-no">✕</span><span>High latency</span></li>
-          <li><span class="status-icon status-no">✕</span><span>Frequent stuttering</span></li>
-          <li><span class="status-icon status-no">✕</span><span>Not smooth</span></li>
+          <li><span class="status-icon status-no">&#10005;</span><span>High latency</span></li>
+          <li><span class="status-icon status-no">&#10005;</span><span>Frequent stuttering</span></li>
+          <li><span class="status-icon status-no">&#10005;</span><span>Not smooth</span></li>
         </ul>
       </div>
       <div class="demo-column-heading block-heading">
         <span class="demo-method">BlockVLA (Ours)</span>
         <ul class="demo-metric-list">
-          <li><span class="status-icon status-ok">✓</span><span>Faster inference</span></li>
-          <li><span class="status-icon status-ok">✓</span><span>Greatly reduced stuttering</span></li>
-          <li><span class="status-icon status-ok">✓</span><span>Smooth execution</span></li>
+          <li><span class="status-icon status-ok">&#10003;</span><span>Faster inference</span></li>
+          <li><span class="status-icon status-ok">&#10003;</span><span>Greatly reduced stuttering</span></li>
+          <li><span class="status-icon status-ok">&#10003;</span><span>Smooth execution</span></li>
         </ul>
       </div>
 
       <article class="demo-video-card" data-demo-pair="cube">
         <div class="demo-task">Put the cube into the bowl (150-200 frames)</div>
-        <div class="demo-speed">3× speed</div>
+        <div class="demo-speed">3&times; speed</div>
         <div class="demo-method-badge">DiscreteDiffusionVLA (Baseline)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video baseline-video" autoplay muted playsinline preload="auto">
@@ -293,7 +323,7 @@
 
       <article class="demo-video-card block-card" data-demo-pair="cube">
         <div class="demo-task">Put the cube into the bowl (150-200 frames)</div>
-        <div class="demo-speed">3× speed</div>
+        <div class="demo-speed">3&times; speed</div>
         <div class="demo-method-badge">BlockVLA (Ours)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video block-video" autoplay muted playsinline preload="auto">
@@ -303,7 +333,7 @@
 
       <article class="demo-video-card" data-demo-pair="corn">
         <div class="demo-task">Put the corn into the plate (250-300 frames)</div>
-        <div class="demo-speed">3× speed</div>
+        <div class="demo-speed">3&times; speed</div>
         <div class="demo-method-badge">DiscreteDiffusionVLA (Baseline)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video baseline-video" autoplay muted playsinline preload="auto">
@@ -313,7 +343,7 @@
 
       <article class="demo-video-card block-card" data-demo-pair="corn">
         <div class="demo-task">Put the corn into the plate (250-300 frames)</div>
-        <div class="demo-speed">3× speed</div>
+        <div class="demo-speed">3&times; speed</div>
         <div class="demo-method-badge">BlockVLA (Ours)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video block-video" autoplay muted playsinline preload="auto">
@@ -323,7 +353,7 @@
 
       <article class="demo-video-card" data-demo-pair="both">
         <div class="demo-task">Put both carrot and eggplant into the plate (450 - 550 frames)</div>
-        <div class="demo-speed">3× speed</div>
+        <div class="demo-speed">3&times; speed</div>
         <div class="demo-method-badge">DiscreteDiffusionVLA (Baseline)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video baseline-video" autoplay muted playsinline preload="auto">
@@ -333,13 +363,67 @@
 
       <article class="demo-video-card block-card" data-demo-pair="both">
         <div class="demo-task">Put both carrot and eggplant into the plate (450 - 550 frames)</div>
-        <div class="demo-speed">3× speed</div>
+        <div class="demo-speed">3&times; speed</div>
         <div class="demo-method-badge">BlockVLA (Ours)</div>
         <div class="demo-finished">Finished</div>
         <video class="demo-video block-video" autoplay muted playsinline preload="auto">
           <source src="./static/video/both_BD.mp4" type="video/mp4">
         </video>
       </article>
+    </div>
+
+    <div class="results-stats">
+      <h3 class="title is-4 has-text-centered">Real-world Success Rate</h3>
+      <p class="stats-caption">
+        BlockVLA also achieves faster <strong>training convergence</strong> and <strong>inference speed</strong> in real-world experiments. The convergence acceleration becomes more pronounced as the task horizon increases.
+      </p>
+      <div class="stats-grid">
+        <article class="stats-card">
+          <h4>Put the cube into the bowl</h4>
+          <div class="bar-group">
+            <div class="bar-row baseline-bar"><span class="bar-label"><span>DiscreteDiffusionVLA</span><span>10k</span></span><span class="bar-track"><span style="width: 58.3%;"></span></span><span class="bar-value">14/24</span></div>
+            <div class="bar-row baseline-bar"><span class="bar-label"><span>DiscreteDiffusionVLA</span><span>30k</span></span><span class="bar-track"><span style="width: 83.3%;"></span></span><span class="bar-value">20/24</span></div>
+            <div class="bar-row baseline-bar"><span class="bar-label"><span>DiscreteDiffusionVLA</span><span>50k</span></span><span class="bar-track"><span style="width: 79.2%;"></span></span><span class="bar-value">19/24</span></div>
+            <div class="stats-divider"></div>
+            <div class="bar-row ours-bar"><span class="bar-label"><span>BlockVLA</span><span>10k</span></span><span class="bar-track"><span style="width: 75%;"></span></span><span class="bar-value">18/24</span></div>
+            <div class="bar-row ours-bar"><span class="bar-label"><span>BlockVLA</span><span>30k</span></span><span class="bar-track"><span style="width: 83.3%;"></span></span><span class="bar-value">20/24</span></div>
+            <div class="bar-row ours-bar"><span class="bar-label"><span>BlockVLA</span><span>50k</span></span><span class="bar-track"><span style="width: 87.5%;"></span></span><span class="bar-value">21/24</span></div>
+          </div>
+        </article>
+
+        <article class="stats-card">
+          <h4>Put the corn into the plate</h4>
+          <div class="bar-group">
+            <div class="bar-row baseline-bar"><span class="bar-label"><span>DiscreteDiffusionVLA</span><span>10k</span></span><span class="bar-track"><span style="width: 37.5%;"></span></span><span class="bar-value">9/24</span></div>
+            <div class="bar-row baseline-bar"><span class="bar-label"><span>DiscreteDiffusionVLA</span><span>30k</span></span><span class="bar-track"><span style="width: 79.2%;"></span></span><span class="bar-value">19/24</span></div>
+            <div class="bar-row baseline-bar"><span class="bar-label"><span>DiscreteDiffusionVLA</span><span>50k</span></span><span class="bar-track"><span style="width: 95.8%;"></span></span><span class="bar-value">23/24</span></div>
+            <div class="stats-divider"></div>
+            <div class="bar-row ours-bar"><span class="bar-label"><span>BlockVLA</span><span>10k</span></span><span class="bar-track"><span style="width: 70.8%;"></span></span><span class="bar-value">17/24</span></div>
+            <div class="bar-row ours-bar"><span class="bar-label"><span>BlockVLA</span><span>30k</span></span><span class="bar-track"><span style="width: 91.7%;"></span></span><span class="bar-value">22/24</span></div>
+            <div class="bar-row ours-bar"><span class="bar-label"><span>BlockVLA</span><span>50k</span></span><span class="bar-track"><span style="width: 95.8%;"></span></span><span class="bar-value">23/24</span></div>
+          </div>
+        </article>
+
+        <article class="stats-card">
+          <h4>Put both carrot and eggplant into the plate</h4>
+          <div class="bar-group">
+            <div class="bar-row baseline-bar"><span class="bar-label"><span>DiscreteDiffusionVLA</span><span>10k</span></span><span class="bar-track"><span style="width: 20.8%;"></span></span><span class="bar-value">5/24</span></div>
+            <div class="bar-row baseline-bar"><span class="bar-label"><span>DiscreteDiffusionVLA</span><span>30k</span></span><span class="bar-track"><span style="width: 58.3%;"></span></span><span class="bar-value">14/24</span></div>
+            <div class="bar-row baseline-bar"><span class="bar-label"><span>DiscreteDiffusionVLA</span><span>50k</span></span><span class="bar-track"><span style="width: 54.2%;"></span></span><span class="bar-value">13/24</span></div>
+            <div class="stats-divider"></div>
+            <div class="bar-row ours-bar"><span class="bar-label"><span>BlockVLA</span><span>10k</span></span><span class="bar-track"><span style="width: 70.8%;"></span></span><span class="bar-value">17/24</span></div>
+            <div class="bar-row ours-bar"><span class="bar-label"><span>BlockVLA</span><span>30k</span></span><span class="bar-track"><span style="width: 75%;"></span></span><span class="bar-value">18/24</span></div>
+            <div class="bar-row ours-bar"><span class="bar-label"><span>BlockVLA</span><span>50k</span></span><span class="bar-track"><span style="width: 66.7%;"></span></span><span class="bar-value">16/24</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="inference-time">
+        <span><strong>Inference time</strong></span>
+        <span class="time-badge baseline-time">DiscreteDiffusionVLA: 2.35 s</span>
+        <span class="speedup-arrow">4.6&times; faster</span>
+        <span class="time-badge ours-time">BlockVLA: 0.51 s</span>
+      </div>
     </div>
   </div>
 </section>
